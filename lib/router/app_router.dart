@@ -40,8 +40,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     initialLocation: '/home',
     refreshListenable: GoRouterRefreshStream(authStream),
     redirect: (context, state) {
-      final authState = ref.read(authStateProvider);
-      final isAuth = authState.value != null;
+      final authService = ref.read(authServiceProvider);
+      final isAuth = authService.currentUser != null;
       final isLoggingIn = state.matchedLocation == '/login' || state.matchedLocation == '/signup';
 
       if (!isAuth && !isLoggingIn) return '/login';

@@ -26,7 +26,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   void _signOut() async {
     await ref.read(authControllerProvider.notifier).logout();
-    if (mounted) context.go('/login');
   }
 
   @override
