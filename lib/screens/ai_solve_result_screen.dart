@@ -50,11 +50,6 @@ class _AiSolveResultScreenState extends ConsumerState<AiSolveResultScreen> {
           ),
           if (_result != null) ...[
             const SizedBox(height: 16),
-            Text('Algorithm: ${_result!.algorithmName}'),
-            Text('Steps: ${_result!.path.length - 1}'),
-            Text('Nodes Explored: ${_result!.nodesExplored}'),
-            Text('Time: ${_result!.executionTime.inMilliseconds} ms'),
-            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () => context.push('/solution', extra: _result),
               child: const Text('View Solution'),
