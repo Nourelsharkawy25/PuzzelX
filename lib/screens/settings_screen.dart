@@ -18,18 +18,7 @@ class SettingsScreen extends ConsumerWidget {
         children: [
           Text('Preferences', style: theme.textTheme.titleMedium?.copyWith(color: theme.primaryColor, fontWeight: FontWeight.bold)),
           const SizedBox(height: 16),
-          SwitchListTile(
-            title: const Text('Sound Effects'),
-            value: settings.soundEnabled,
-            onChanged: settingsNotifier.toggleSound,
-            activeColor: theme.primaryColor,
-          ),
-          SwitchListTile(
-            title: const Text('Animations'),
-            value: settings.animationsEnabled,
-            onChanged: settingsNotifier.toggleAnimations,
-            activeColor: theme.primaryColor,
-          ),
+
           SwitchListTile(
             title: const Text('Dark Mode'),
             value: settings.isDarkMode,
