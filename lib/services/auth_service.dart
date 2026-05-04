@@ -43,7 +43,7 @@ String _mapFirebaseAuthError(FirebaseAuthException e) {
     case 'network-request-failed':
       return 'Network error. Please check your internet connection.';
     case 'invalid-credential':
-      return 'Invalid email or password. Please check and try again.';
+      return 'Invalid email or password. If you don\'t have an account, please Sign Up first.';
     default:
       return e.message ?? 'An unexpected error occurred. Please try again.';
   }
