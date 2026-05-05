@@ -59,7 +59,7 @@ class GameNotifier extends StateNotifier<GameState> {
     do {
       newBoard = List<int>.from(_generateSolvedBoard());
       newBoard.shuffle();
-    } while (!PuzzleSolver.isSolvable(newBoard) || const ListEquality().equals(newBoard, _generateSolvedBoard()));
+    } while (PuzzleSolver.solveAStar(newBoard) == null || const ListEquality().equals(newBoard, _generateSolvedBoard()));
 
     state = GameState(
       board: newBoard,
