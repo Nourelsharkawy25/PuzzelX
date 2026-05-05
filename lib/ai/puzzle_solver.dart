@@ -2,13 +2,13 @@ import 'dart:collection';
 import 'package:collection/collection.dart';
 
 class SolverResult {
-  final List<List<int>> path;
+  final int steps;
   final int nodesExplored;
   final Duration executionTime;
   final String algorithmName;
 
   SolverResult({
-    required this.path,
+    required this.steps,
     required this.nodesExplored,
     required this.executionTime,
     required this.algorithmName,
@@ -113,14 +113,14 @@ class AStarNode {
 }
 
 SolverResult _buildResult(dynamic endNode, int explored, DateTime start, String algo) {
-  List<List<int>> path = [];
+  int steps = 0;
   dynamic current = endNode;
   while (current != null) {
-    path.add(current.board);
+    steps++;
     current = current.parent;
   }
   return SolverResult(
-    path: path.reversed.toList(),
+    steps: steps > 0 ? steps - 1 : 0,
     nodesExplored: explored,
     executionTime: DateTime.now().difference(start),
     algorithmName: algo,

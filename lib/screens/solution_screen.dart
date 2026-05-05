@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../ai/puzzle_solver.dart';
 import '../providers/game_provider.dart';
 
-class SolutionPathScreen extends ConsumerWidget {
+class SolutionScreen extends ConsumerWidget {
   final SolverResult result;
-  const SolutionPathScreen({Key? key, required this.result}) : super(key: key);
+  const SolutionScreen({Key? key, required this.result}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,7 +25,7 @@ class SolutionPathScreen extends ConsumerWidget {
           children: [
             Text('Algorithm: ${result.algorithmName}', style: const TextStyle(fontSize: 20)),
             const SizedBox(height: 16),
-            Text('Steps: ${result.path.length - 1}', style: const TextStyle(fontSize: 20)),
+            Text('Steps: ${result.steps}', style: const TextStyle(fontSize: 20)),
             const SizedBox(height: 16),
             Text('Nodes Explored: ${result.nodesExplored}', style: const TextStyle(fontSize: 20)),
             const SizedBox(height: 16),

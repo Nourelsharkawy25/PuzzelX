@@ -9,7 +9,7 @@ import '../screens/signup_screen.dart';
 import '../screens/home_screen.dart';
 import '../screens/game_board_screen.dart';
 import '../screens/ai_solve_result_screen.dart';
-import '../screens/solution_path_screen.dart';
+import '../screens/solution_screen.dart';
 import '../screens/leaderboard_screen.dart';
 import '../screens/profile_screen.dart';
 import '../screens/settings_screen.dart';
@@ -73,7 +73,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: '/solution',
         builder: (context, state) {
           final result = state.extra as SolverResult;
-          return SolutionPathScreen(result: result);
+          return SolutionScreen(result: result);
         },
       ),
       GoRoute(
