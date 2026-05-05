@@ -185,14 +185,14 @@ class PuzzleSolver {
       List<MapEntry<List<int>, int>> neighbors = get_childs_astar(u, currentG);
       for (var neighbor in neighbors) {
         List<int> v = neighbor.key;
-        int f_val = neighbor.value;
+        int fVal = neighbor.value;
         String vHash = v.join(',');
 
-        int new_cost = currentG + 1;
+        int newCost = currentG + 1;
 
-        if (!gMap.containsKey(vHash) || new_cost < gMap[vHash]!) {
-          gMap[vHash] = new_cost;
-          pq.add(AStarNode(v, f_val, new_cost));
+        if (!gMap.containsKey(vHash) || newCost < gMap[vHash]!) {
+          gMap[vHash] = newCost;
+          pq.add(AStarNode(v, fVal, newCost));
         }
       }
     }

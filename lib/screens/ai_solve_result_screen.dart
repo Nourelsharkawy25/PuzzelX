@@ -6,7 +6,7 @@ import '../providers/game_provider.dart';
 import '../ai/puzzle_solver.dart';
 
 class AiSolveResultScreen extends ConsumerStatefulWidget {
-  const AiSolveResultScreen({Key? key}) : super(key: key);
+  const AiSolveResultScreen({super.key});
   @override
   ConsumerState<AiSolveResultScreen> createState() => _AiSolveResultScreenState();
 }

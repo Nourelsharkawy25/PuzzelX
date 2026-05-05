@@ -6,7 +6,7 @@ import '../providers/game_provider.dart';
 
 class SolutionScreen extends ConsumerWidget {
   final SolverResult result;
-  const SolutionScreen({Key? key, required this.result}) : super(key: key);
+  const SolutionScreen({super.key, required this.result});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
