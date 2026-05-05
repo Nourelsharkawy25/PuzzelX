@@ -19,6 +19,7 @@ abstract class AuthService {
   Future<UserModel?> signup(String name, String email, String password);
   Future<void> logout();
   Stream<UserModel?> get authStateChanges;
+  UserModel? get currentUser;
 }
 
 /// Converts Firebase error codes into user-friendly messages.
@@ -43,7 +44,7 @@ String _mapFirebaseAuthError(FirebaseAuthException e) {
     case 'network-request-failed':
       return 'Network error. Please check your internet connection.';
     case 'invalid-credential':
-      return 'Invalid email or password. Please check and try again.';
+      return 'Invalid email or password. If you don\'t have an account, please Sign Up first.';
     default:
       return e.message ?? 'An unexpected error occurred. Please try again.';
   }
@@ -53,6 +54,13 @@ String _mapFirebaseAuthError(FirebaseAuthException e) {
 class FirebaseAuthService implements AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirestoreService _firestore = FirestoreService.instance;
+
+  @override
+  UserModel? get currentUser {
+    final user = _auth.currentUser;
+    if (user == null) return null;
+    return UserModel(uid: user.uid, name: user.displayName ?? 'Player', email: user.email ?? '');
+  }
 
   @override
   Stream<UserModel?> get authStateChanges {
@@ -168,6 +176,9 @@ class FirebaseAuthService implements AuthService {
 class MockAuthService implements AuthService {
   UserModel? _currentUser;
   final _controller = StreamController<UserModel?>.broadcast();
+
+  @override
+  UserModel? get currentUser => _currentUser;
 
   @override
   Stream<UserModel?> get authStateChanges async* {
