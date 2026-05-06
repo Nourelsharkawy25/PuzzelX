@@ -2,13 +2,13 @@ import 'dart:collection';
 import 'package:collection/collection.dart';
 
 class SolverResult {
-  final List<List<int>> path;
+  final int steps;
   final int nodesExplored;
   final Duration executionTime;
   final String algorithmName;
 
   SolverResult({
-    required this.path,
+    required this.steps,
     required this.nodesExplored,
     required this.executionTime,
     required this.algorithmName,
@@ -100,31 +100,15 @@ List<MapEntry<List<int>, int>> get_childs_astar(List<int> u, int g) {
 
 class Node {
   final List<int> board;
-  final Node? parent;
-  Node(this.board, this.parent);
+  final int steps;
+  Node(this.board, this.steps);
 }
 
 class AStarNode {
   final List<int> board;
   final int f;
   final int g;
-  final AStarNode? parent;
-  AStarNode(this.board, this.f, this.g, this.parent);
-}
-
-SolverResult _buildResult(dynamic endNode, int explored, DateTime start, String algo) {
-  List<List<int>> path = [];
-  dynamic current = endNode;
-  while (current != null) {
-    path.add(current.board);
-    current = current.parent;
-  }
-  return SolverResult(
-    path: path.reversed.toList(),
-    nodesExplored: explored,
-    executionTime: DateTime.now().difference(start),
-    algorithmName: algo,
-  );
+  AStarNode(this.board, this.f, this.g);
 }
 
 class PuzzleSolver {
@@ -134,7 +118,7 @@ class PuzzleSolver {
     Queue<Node> q = Queue();
     Set<String> vis = {};
 
-    q.add(Node(puzzle, null));
+    q.add(Node(puzzle, 0));
     vis.add(puzzle.join(','));
 
     int nodesExplored = 0;
@@ -147,14 +131,19 @@ class PuzzleSolver {
         nodesExplored++;
 
         if (const ListEquality().equals(u, GOAL)) {
-          return _buildResult(uNode, nodesExplored, startTime, 'BFS');
+          return SolverResult(
+            steps: uNode.steps,
+            nodesExplored: nodesExplored,
+            executionTime: DateTime.now().difference(startTime),
+            algorithmName: 'BFS',
+          );
         }
 
         List<List<int>> neighbors = get_childs(u);
         for (List<int> v in neighbors) {
           String vStr = v.join(',');
           if (!vis.contains(vStr)) {
-            q.add(Node(v, uNode));
+            q.add(Node(v, uNode.steps + 1));
             vis.add(vStr);
           }
         }
@@ -173,7 +162,7 @@ class PuzzleSolver {
     String startHash = puzzle.join(',');
     gMap[startHash] = 0;
 
-    pq.add(AStarNode(puzzle, hx(puzzle), 0, null));
+    pq.add(AStarNode(puzzle, hx(puzzle), 0));
     int nodesExplored = 0;
 
     while (pq.isNotEmpty) {
@@ -183,7 +172,12 @@ class PuzzleSolver {
       nodesExplored++;
 
       if (const ListEquality().equals(u, GOAL)) {
-        return _buildResult(top, nodesExplored, startTime, 'A*');
+        return SolverResult(
+          steps: top.g,
+          nodesExplored: nodesExplored,
+          executionTime: DateTime.now().difference(startTime),
+          algorithmName: 'A*',
+        );
       }
 
       int currentG = gMap[uHash] ?? top.g;
@@ -191,29 +185,18 @@ class PuzzleSolver {
       List<MapEntry<List<int>, int>> neighbors = get_childs_astar(u, currentG);
       for (var neighbor in neighbors) {
         List<int> v = neighbor.key;
-        int f_val = neighbor.value;
+        int fVal = neighbor.value;
         String vHash = v.join(',');
 
-        int new_cost = currentG + 1;
+        int newCost = currentG + 1;
 
-        if (!gMap.containsKey(vHash) || new_cost < gMap[vHash]!) {
-          gMap[vHash] = new_cost;
-          pq.add(AStarNode(v, f_val, new_cost, top));
+        if (!gMap.containsKey(vHash) || newCost < gMap[vHash]!) {
+          gMap[vHash] = newCost;
+          pq.add(AStarNode(v, fVal, newCost));
         }
       }
     }
 
     return null;
-  }
-
-  static bool isSolvable(List<int> puzzle) {
-    int inversions = 0;
-    List<int> list = puzzle.where((e) => e != 0).toList();
-    for (int i = 0; i < list.length - 1; i++) {
-        for (int j = i + 1; j < list.length; j++) {
-            if (list[i] > list[j]) inversions++;
-        }
-    }
-    return inversions % 2 == 0;
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/settings_provider.dart';
 
 class SettingsScreen extends ConsumerWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+  const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,7 +23,7 @@ class SettingsScreen extends ConsumerWidget {
             title: const Text('Dark Mode'),
             value: settings.isDarkMode,
             onChanged: settingsNotifier.toggleDarkMode,
-            activeColor: theme.primaryColor,
+            activeThumbColor: theme.primaryColor,
           ),
           const Divider(height: 48),
           Text('Game & AI', style: theme.textTheme.titleMedium?.copyWith(color: theme.primaryColor, fontWeight: FontWeight.bold)),

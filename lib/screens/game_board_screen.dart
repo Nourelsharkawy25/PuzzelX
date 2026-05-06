@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../providers/game_provider.dart';
 
 class GameBoardScreen extends ConsumerWidget {
-  const GameBoardScreen({Key? key}) : super(key: key);
+  const GameBoardScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

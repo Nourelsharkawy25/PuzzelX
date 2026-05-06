@@ -77,8 +77,8 @@ class FirebaseAuthService implements AuthService {
             return;
           }
 
-          final isRecentSignUp = user.metadata?.creationTime != null && 
-              DateTime.now().difference(user.metadata!.creationTime!) < const Duration(seconds: 10);
+          final isRecentSignUp = user.metadata.creationTime != null && 
+              DateTime.now().difference(user.metadata.creationTime!) < const Duration(seconds: 10);
 
           firestoreSub = _firestore.getUserStream(user.uid).listen((userModel) async {
             if (userModel == null) {

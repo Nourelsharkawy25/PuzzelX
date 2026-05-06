@@ -42,7 +42,7 @@ void main() async {
 }
 
 class PuzzelXApp extends ConsumerWidget {
-  const PuzzelXApp({Key? key}) : super(key: key);
+  const PuzzelXApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
